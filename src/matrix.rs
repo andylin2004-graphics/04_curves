@@ -109,7 +109,17 @@ impl Matrix{
     }
 
     pub fn make_hermite() -> Matrix{
-        
+        let mut matrix = Matrix::new(4,4);
+        matrix.matrix_array[0][3] = 1.0;
+        matrix.matrix_array[1][0] = 1.0;
+        matrix.matrix_array[1][1] = 1.0;
+        matrix.matrix_array[1][2] = 1.0;
+        matrix.matrix_array[1][3] = 1.0;
+        matrix.matrix_array[2][2] = 1.0;
+        matrix.matrix_array[3][0] = 3.0;
+        matrix.matrix_array[3][1] = 2.0;
+        matrix.matrix_array[3][2] = 1.0;
+        return matrix;
     }
 }
 
