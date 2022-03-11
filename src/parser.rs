@@ -132,7 +132,11 @@ pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, scr
             "quit"=>{
                 break;
             }
+            _ if doc_lines[i].starts_with('#') => {
+                println!("e");
+            }
             _=>{
+                
                 panic!("Invalid command {} at line {}.", doc_lines[i], i+1);
             }
         }
