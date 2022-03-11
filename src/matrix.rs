@@ -92,6 +92,25 @@ impl Matrix{
         matrix.matrix_array[1][1] = matrix.matrix_array[0][0];
         return matrix;
     }
+
+    pub fn make_bezier() -> Matrix{
+        let mut matrix = Matrix::new(4,4);
+        matrix.matrix_array[0][0] = -1.0;
+        matrix.matrix_array[0][1] = 3.0;
+        matrix.matrix_array[0][2] = -3.0;
+        matrix.matrix_array[0][3] = 1.0;
+        matrix.matrix_array[1][0] = 3.0;
+        matrix.matrix_array[1][1] = -6.0;
+        matrix.matrix_array[1][2] = 3.0;
+        matrix.matrix_array[2][0] = -3.0;
+        matrix.matrix_array[2][1] = -3.0;
+        matrix.matrix_array[3][0] = 1.0;
+        return matrix;
+    }
+
+    pub fn make_hermite() -> Matrix{
+        
+    }
 }
 
 impl fmt::Display for Matrix{
