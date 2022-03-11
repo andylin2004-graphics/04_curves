@@ -9,41 +9,50 @@ use std::process::Command;
 /// 
 /// The file follows the following format:
 /// 
-///      Every command is a single character that takes up a line
+// Every command is a single character that takes up a line
+
+/// Any command that requires arguments must have those arguments in the second line.
+
+/// The commands are as follows:
+
+/// line: add a line to the edge matrix -
+/// takes 6 arguemnts (x0, y0, z0, x1, y1, z1)
+
+/// ident: set the transform matrix to the identity matrix -
+
+/// scale: create a scale matrix,
+// then multiply the transform matrix by the scale matrix -
+// takes 3 arguments (sx, sy, sz)
+
+// translate: create a translation matrix,
+// then multiply the transform matrix by the translation matrix -
+// takes 3 arguments (tx, ty, tz)
+
+// rotate: create a rotation matrix,
+// then multiply the transform matrix by the rotation matrix -
+// takes 2 arguments (axis, theta) axis should be x y or z
+
+// apply: apply the current transformation matrix to the edge matrix
+
+// display: clear the screen, then
+// draw the lines of the edge matrix to the screen
+// display the screen
+
+// save: clear the screen, then
+// draw the lines of the edge matrix to the screen
+// save the screen to a file -
+// takes 1 argument (file name)
+
+// quit: end parsing
 /// 
-///      Any command that requires arguments must have those arguments in the second line.
+/// circle: add a circle to the edge matrix - 
+/// takes 4 arguments (cx, cy, cz, r)
 /// 
-///      The commands are as follows:
+/// hermite: add a hermite curve to the edge matrix -
+///          takes 8 arguments (x0, y0, x1, y1, rx0, ry0, rx1, ry1)
 /// 
-///          line: add a line to the edge matrix -
-///                takes 6 arguemnts (x0, y0, z0, x1, y1, z1)
-/// 
-///          ident: set the transform matrix to the identity matrix -
-/// 
-///          scale: create a scale matrix,
-///                 then multiply the transform matrix by the scale matrix -
-///                 takes 3 arguments (sx, sy, sz)
-/// 
-///          translate: create a translation matrix,
-///                     then multiply the transform matrix by the translation matrix -
-///                     takes 3 arguments (tx, ty, tz)
-/// 
-///          rotate: create a rotation matrix,
-///                  then multiply the transform matrix by the rotation matrix -
-///                  takes 2 arguments (axis, theta) axis should be x y or z
-/// 
-///          apply: apply the current transformation matrix to the edge matrix
-/// 
-///          display: clear the screen, then
-///                   draw the lines of the edge matrix to the screen
-///                   display the screen
-/// 
-///          save: clear the screen, then
-///                draw the lines of the edge matrix to the screen
-///                save the screen to a file -
-///                takes 1 argument (file name)
-/// 
-///          quit: end parsing
+/// bezier: add a bezier curve to the edge matrix -
+///         takes 8 arguments (x0, y0, x1, y1, x2, y2, x3, y3)
 ///
 /// See the file script for an example of the file format
 pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, screen: &mut Image, color: Color ) -> io::Result<()>{
@@ -132,8 +141,35 @@ pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, scr
             "quit"=>{
                 break;
             }
+            "circle"=>{
+                i += 1;
+                let mut params = vec![""; 0];
+                for input in doc_lines[i].split(' '){
+                    params.push(input);
+                }
+
+                
+            }
+            "hermite"=>{
+                i += 1;
+                let mut params = vec![""; 0];
+                for input in doc_lines[i].split(' '){
+                    params.push(input);
+                }
+
+
+            }
+            "bezier"=>{
+                i += 1;
+                let mut params = vec![""; 0];
+                for input in doc_lines[i].split(' '){
+                    params.push(input);
+                }
+
+                
+            }
             _ if doc_lines[i].starts_with('#') => {
-                println!("e");
+                continue;
             }
             _=>{
                 
