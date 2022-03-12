@@ -5,11 +5,16 @@ pub struct Matrix{
     pub(in crate) matrix_array: Vec<Vec<f32>>,
 }
 
+pub enum CurveType{
+    Bezier,
+    Hermite
+}
+
 impl Matrix{
     pub fn new(row: usize, col: usize) -> Matrix{
         Matrix{matrix_array: vec![vec![0.0; col]; row],}
     }
-
+    
     /// multiply m1 by the object that this is called on, modifying this object to be the product
     /// 
     /// m1 * this object -> this object
@@ -22,10 +27,10 @@ impl Matrix{
                 }
             }
         }
-
+        
         *self = matrix_result;
     }
-
+    
     pub fn identity(&mut self){
         for i in 0..self.matrix_array.len(){
             for v in 0..self.matrix_array[0].len(){
@@ -37,11 +42,11 @@ impl Matrix{
             }
         }
     }
-
+    
     pub fn print_matrix(&self){
         println!("{}", self);
     }
-
+    
     pub fn make_translate(x: i32, y: i32, z: i32) -> Matrix{
         let mut matrix = Matrix::new(4, 4);
         matrix.identity();
@@ -50,7 +55,7 @@ impl Matrix{
         matrix.matrix_array[2][3] = z as f32;
         return matrix;
     }
-
+    
     pub fn make_scale( x: f32, y: f32, z: f32) -> Matrix{
         let mut matrix = Matrix::new(4, 4);
         matrix.matrix_array[0][0] = x as f32;
@@ -59,7 +64,7 @@ impl Matrix{
         matrix.matrix_array[3][3] = 1.0;
         return matrix;
     }
-
+    
     pub fn make_rotX(mut theta: f32 ) -> Matrix{
         let mut matrix = Matrix::new(4, 4);
         matrix.identity();
@@ -70,7 +75,7 @@ impl Matrix{
         matrix.matrix_array[2][2] = matrix.matrix_array[1][1];
         return matrix;
     }
-
+    
     pub fn make_rotY( mut theta: f32 ) -> Matrix{
         let mut matrix = Matrix::new(4, 4);
         matrix.identity();
@@ -81,7 +86,7 @@ impl Matrix{
         matrix.matrix_array[2][2] = matrix.matrix_array[0][0];
         return matrix;
     }
-
+    
     pub fn make_rotZ( mut theta: f32 ) -> Matrix{
         let mut matrix = Matrix::new(4, 4);
         matrix.identity();
@@ -92,7 +97,7 @@ impl Matrix{
         matrix.matrix_array[1][1] = matrix.matrix_array[0][0];
         return matrix;
     }
-
+    
     pub fn make_bezier() -> Matrix{
         let mut matrix = Matrix::new(4,4);
         matrix.matrix_array[0][0] = -1.0;
@@ -107,18 +112,56 @@ impl Matrix{
         matrix.matrix_array[3][0] = 1.0;
         return matrix;
     }
-
+    
     pub fn make_hermite() -> Matrix{
         let mut matrix = Matrix::new(4,4);
+        matrix.matrix_array[0][0] = 2.0;
+        matrix.matrix_array[0][1] = -2.0;
+        matrix.matrix_array[0][2] = 1.0;
         matrix.matrix_array[0][3] = 1.0;
-        matrix.matrix_array[1][0] = 1.0;
-        matrix.matrix_array[1][1] = 1.0;
-        matrix.matrix_array[1][2] = 1.0;
-        matrix.matrix_array[1][3] = 1.0;
+        matrix.matrix_array[1][0] = -3.0;
+        matrix.matrix_array[1][1] = 3.0;
+        matrix.matrix_array[1][2] = -2.0;
+        matrix.matrix_array[1][3] = -1.0;
         matrix.matrix_array[2][2] = 1.0;
-        matrix.matrix_array[3][0] = 3.0;
-        matrix.matrix_array[3][1] = 2.0;
-        matrix.matrix_array[3][2] = 1.0;
+        matrix.matrix_array[3][0] = 1.0;
+        return matrix;
+    }
+    
+    /// Inputs:   double p1
+    /// 
+    /// double p2
+    /// 
+    /// double p3
+    /// 
+    /// double p4
+    /// 
+    /// enum CurveType type
+    /// 
+    /// Returns:
+    /// 
+    /// A matrix containing the values for a, b, c and d of the
+    /// equation at^3 + bt^2 + ct + d for the curve defined
+    /// by p1, p2, p3 and p4.
+    ///
+    /// Type determines whether the curve is bezier or hermite (see matrix.h)
+    
+    pub fn generate_curve_coefs( p0: f32, p1: f32, p2: f32, p3: f32, t: CurveType ) -> Matrix{
+        let mut matrix = Matrix::new(4,1);
+        matrix.matrix_array[1][0] = p0;
+        matrix.matrix_array[1][0] = p1;
+        matrix.matrix_array[1][0] = p2; // r0 if hermite
+        matrix.matrix_array[1][0] = p3; // r1 if hermite
+        let curve_matrix: Matrix;
+        match t{
+            Bezier=>{
+                curve_matrix =  Matrix::make_bezier();
+            }
+            Hermite=>{
+                curve_matrix = Matrix::make_hermite();
+            }
+        }
+        matrix.multiply_matrixes(&curve_matrix);
         return matrix;
     }
 }
