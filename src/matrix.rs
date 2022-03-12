@@ -108,7 +108,7 @@ impl Matrix{
         matrix.matrix_array[1][1] = -6.0;
         matrix.matrix_array[1][2] = 3.0;
         matrix.matrix_array[2][0] = -3.0;
-        matrix.matrix_array[2][1] = -3.0;
+        matrix.matrix_array[2][1] = 3.0;
         matrix.matrix_array[3][0] = 1.0;
         return matrix;
     }

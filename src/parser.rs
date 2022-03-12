@@ -149,7 +149,7 @@ pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, scr
                     params.push(input.parse().unwrap());
                 }
 
-                points.add_circle(params[0], params[1], params[2], params[3], 0.001);
+                points.add_circle(params[0], params[1], params[2], params[3], 0.0001);
             }
             "hermite"=>{
                 i += 1;
@@ -158,7 +158,7 @@ pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, scr
                     params.push(input.parse().unwrap());
                 }
 
-                points.add_curve(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], 0.001, &CurveType::Hermite);
+                points.add_curve(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], 0.0001, &CurveType::Hermite);
             }
             "bezier"=>{
                 i += 1;
@@ -167,7 +167,7 @@ pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, scr
                     params.push(input.parse().unwrap());
                 }
 
-                points.add_curve(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], 0.001, &CurveType::Bezier);
+                points.add_curve(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], 0.0001, &CurveType::Bezier);
             }
             _ if doc_lines[i].starts_with('#') => {
             }
