@@ -98,6 +98,8 @@ impl Matrix{
         return matrix;
     }
     
+    ///Returns: The correct 4x4 matrix that can be used
+    ///to generate the coefiecients for a bezier curve
     pub fn make_bezier() -> Matrix{
         let mut matrix = Matrix::new(4,4);
         matrix.matrix_array[0][0] = -1.0;
@@ -112,7 +114,8 @@ impl Matrix{
         matrix.matrix_array[3][0] = 1.0;
         return matrix;
     }
-    
+    ///Returns: The correct 4x4 matrix that can be used
+    ///to generate the coefiecients for a hermite curve
     pub fn make_hermite() -> Matrix{
         let mut matrix = Matrix::new(4,4);
         matrix.matrix_array[0][0] = 2.0;
@@ -143,8 +146,6 @@ impl Matrix{
     /// A matrix containing the values for a, b, c and d of the
     /// equation at^3 + bt^2 + ct + d for the curve defined
     /// by p1, p2, p3 and p4.
-    ///
-    /// Type determines whether the curve is bezier or hermite (see matrix.h)
     
     pub fn generate_curve_coefs( p0: f32, p1: f32, p2: f32, p3: f32, t: &CurveType ) -> Matrix{
         let mut matrix = Matrix::new(4,1);
