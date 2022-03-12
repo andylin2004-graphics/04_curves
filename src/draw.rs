@@ -2,6 +2,7 @@ use crate::Image;
 use crate::Matrix;
 use crate::Color;
 use crate::CurveType;
+use std::f32;
 
 impl Image{
     pub fn draw_line(&mut self, mut x0: i32, mut y0: i32, mut x1: i32, mut y1: i32, color: Color){
@@ -115,12 +116,19 @@ impl Matrix{
         self.matrix_array[3].push(1.0);
     }
 
-    pub fn add_circle( points: Matrix, cx: f32, cy: f32, cz: f32, r: f32, step: f32 ){
-        let mut i = 0.0;
-        while i < 1.0{
-            
-            points.add_edge();
-            i += step;
+    pub fn add_circle( &mut self, cx: f32, cy: f32, cz: f32, r: f32, step: f32 ){
+        let mut t = 0.0;
+        let mut prev_x = 0.0;
+        let mut prev_y = 0.0;
+        while t < 1.0{
+            let x = r*(2.0*f32::consts::PI*t).cos()+cx;
+            let y = r*(2.0*f32::consts::PI*t).sin()+cy;
+            if t > 0.0{
+                self.add_edge(prev_x, prev_y, cz, x, y, cz);
+            }
+            prev_x = x;
+            prev_y = y;
+            t += step;
         }
     }
 

@@ -143,12 +143,12 @@ pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, scr
             }
             "circle"=>{
                 i += 1;
-                let mut params = vec![""; 0];
+                let mut params = vec![0.0; 0];
                 for input in doc_lines[i].split(' '){
-                    params.push(input);
+                    params.push(input.parse().unwrap());
                 }
 
-                
+                points.add_circle(params[0], params[1], params[2], params[3], 0.1);
             }
             "hermite"=>{
                 i += 1;
