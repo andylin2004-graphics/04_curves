@@ -146,12 +146,12 @@ impl Matrix{
     ///
     /// Type determines whether the curve is bezier or hermite (see matrix.h)
     
-    pub fn generate_curve_coefs( p0: f32, p1: f32, p2: f32, p3: f32, t: CurveType ) -> Matrix{
+    pub fn generate_curve_coefs( p0: f32, p1: f32, p2: f32, p3: f32, t: &CurveType ) -> Matrix{
         let mut matrix = Matrix::new(4,1);
-        matrix.matrix_array[1][0] = p0;
+        matrix.matrix_array[0][0] = p0;
         matrix.matrix_array[1][0] = p1;
-        matrix.matrix_array[1][0] = p2; // r0 if hermite
-        matrix.matrix_array[1][0] = p3; // r1 if hermite
+        matrix.matrix_array[2][0] = p2; // r0 if hermite
+        matrix.matrix_array[3][0] = p3; // r1 if hermite
         let curve_matrix: Matrix;
         match t{
             Bezier=>{

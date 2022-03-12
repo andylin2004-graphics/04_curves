@@ -132,15 +132,22 @@ impl Matrix{
         }
     }
 
-    pub fn add_curve( points: &mut Matrix, x0: f32, y0: f32, x1: f32, y1: f32, x2: f32, y2: f32, x3: f32, y3: f32, step: f32, t: CurveType ){
-        match t{
-            Bezier=>{
-
+    /// x2, y2, x3, y3 are rx0, ry0, rx1, ry1 respectively if hermier
+    pub fn add_curve( &mut self, x0: f32, y0: f32, x1: f32, y1: f32, x2: f32, y2: f32, x3: f32, y3: f32, step: f32, curveType: &CurveType ){
+        let matrix_x = Matrix::generate_curve_coefs(x0, x1, x2, x3, curveType);
+        let matrix_y = Matrix::generate_curve_coefs(y0, y1, y2, y3, curveType);
+        let mut t: f32 = 0.0;
+        let mut prev_x = 0.0;
+        let mut prev_y = 0.0;
+        while t < 1.0{
+            let x = (matrix_x.matrix_array[0][0]*t.powi(3))+(matrix_x.matrix_array[1][0]*t.powi(2))+(matrix_x.matrix_array[2][0]*t)+matrix_x.matrix_array[3][0];
+            let y = (matrix_y.matrix_array[0][0]*t.powi(3))+(matrix_y.matrix_array[1][0]*t.powi(2))+(matrix_y.matrix_array[2][0]*t)+matrix_y.matrix_array[3][0];
+            if t > 0.0{
+                self.add_edge(prev_x, prev_y, 0.0, x, y, 0.0); 
             }
-            Hermite=>{
-                let r0 = y2/x2;
-                let r1 = y3/x3;
-            }
+            prev_x = x;
+            prev_y = y;
+            t += step;
         }
     }
 }
