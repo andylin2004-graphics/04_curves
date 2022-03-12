@@ -154,10 +154,10 @@ impl Matrix{
         matrix.matrix_array[3][0] = p3; // r1 if hermite
         let curve_matrix: Matrix;
         match t{
-            Bezier=>{
+            CurveType::Bezier=>{
                 curve_matrix =  Matrix::make_bezier();
             }
-            Hermite=>{
+            CurveType::Hermite=>{
                 curve_matrix = Matrix::make_hermite();
             }
         }
