@@ -3,6 +3,7 @@ use image::Image;
 use color::Color;
 use matrix::Matrix;
 use std::env;
+use matrix::CurveType;
 mod parser;
 mod matrix;
 mod image;

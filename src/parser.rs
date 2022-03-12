@@ -166,7 +166,7 @@ pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, scr
                     params.push(input);
                 }
 
-                
+
             }
             _ if doc_lines[i].starts_with('#') => {
                 continue;

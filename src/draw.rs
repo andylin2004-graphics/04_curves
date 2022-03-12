@@ -1,6 +1,7 @@
 use crate::Image;
 use crate::Matrix;
 use crate::Color;
+use crate::CurveType;
 
 impl Image{
     pub fn draw_line(&mut self, mut x0: i32, mut y0: i32, mut x1: i32, mut y1: i32, color: Color){
@@ -112,5 +113,26 @@ impl Matrix{
         self.matrix_array[1].push(y);
         self.matrix_array[2].push(z);
         self.matrix_array[3].push(1.0);
+    }
+
+    pub fn add_circle( points: Matrix, cx: f32, cy: f32, cz: f32, r: f32, step: f32 ){
+        let mut i = 0.0;
+        while i < 1.0{
+            
+            points.add_edge();
+            i += step;
+        }
+    }
+
+    pub fn add_curve( points: &mut Matrix, x0: f32, y0: f32, x1: f32, y1: f32, x2: f32, y2: f32, x3: f32, y3: f32, step: f32, t: CurveType ){
+        match t{
+            Bezier=>{
+
+            }
+            Hermite=>{
+                let r0 = y2/x2;
+                let r1 = y3/x3;
+            }
+        }
     }
 }
