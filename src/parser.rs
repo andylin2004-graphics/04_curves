@@ -122,14 +122,19 @@ pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, scr
             "apply"=>{
                 points.multiply_matrixes(&transform);
             }
-            "display"=>{
+            "clear draw buffer"=>{
+                *points = Matrix::new(4,4);
+            }
+            "clear screen"=>{
                 screen.clear();
-                screen.draw_lines(&points, color);
+            }
+            "display"=>{
                 screen.display();
             }
-            "save"=>{
-                screen.clear();
+            "draw"=>{
                 screen.draw_lines(&points, color);
+            }
+            "save"=>{
                 i += 1;
                 screen.create_file(&*doc_lines[i]);
                 Command::new("magick")
