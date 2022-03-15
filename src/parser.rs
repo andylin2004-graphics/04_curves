@@ -56,7 +56,7 @@ use crate::matrix::CurveType;
 ///         takes 8 arguments (x0, y0, x1, y1, x2, y2, x3, y3)
 ///
 /// See the file script for an example of the file format
-pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, screen: &mut Image, color: Color ) -> io::Result<()>{
+pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, screen: &mut Image, color: &mut Color ) -> io::Result<()>{
     let file = File::open(&fname)?;
     let reader = BufReader::new(file);
     let mut doc_lines = vec![String::new(); 0];
@@ -168,6 +168,16 @@ pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, scr
                 }
 
                 points.add_curve(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], 0.0001, &CurveType::Bezier);
+            }
+            "color"=>{
+                i += 1;
+                let mut params = vec![0; 0];
+                for input in doc_lines[i].split(' '){
+                    params.push(input.parse().unwrap());
+                }
+                color.r = params[0];
+                color.g = params[1];
+                color.b = params[2];
             }
             _ if doc_lines[i].starts_with('#') => {
             }
