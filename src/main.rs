@@ -11,11 +11,18 @@ mod color;
 mod draw;
 
 fn main() {
-    // println!("Hello, world!");
-    let mut screen = Image::new(500, 500);
-    let mut color = Color::new_color(0, 255, 0);
-    let mut edges = Matrix::new(0,0);
-    let mut transform = Matrix::new(4,4);
-    // parse_file("script", &mut edges, &mut transform, &mut screen, color);
-    parse_file("sfloop", &mut edges, &mut transform, &mut screen, &mut color);
+    let args: Vec<String> = env::args().collect();
+    if args.len() > 1 && args[1] == "art"{
+        let mut screen = Image::new(500, 500);
+        let mut color = Color::new_color(0, 255, 0);
+        let mut edges = Matrix::new(0,0);
+        let mut transform = Matrix::new(4,4);
+        parse_file("script", &mut edges, &mut transform, &mut screen, &mut color);    
+    }else{
+        let mut screen = Image::new(500, 500);
+        let mut color = Color::new_color(0, 255, 0);
+        let mut edges = Matrix::new(0,0);
+        let mut transform = Matrix::new(4,4);
+        parse_file("sfloop", &mut edges, &mut transform, &mut screen, &mut color);
+    }
 }
