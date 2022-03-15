@@ -1,6 +1,8 @@
+background
+255 255 255
 #track switches
 color
-168 168 168
+0 0 0
 bezier
 72.2 109 75.8 114.4 80.2 122.7 83.6 131.6
 bezier
@@ -56,3 +58,5 @@ bezier
 draw
 clear draw buffer
 display
+save
+South Ferry loop.png

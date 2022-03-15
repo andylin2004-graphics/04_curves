@@ -184,6 +184,20 @@ pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, scr
                 color.g = params[1];
                 color.b = params[2];
             }
+            "background"=>{
+                i += 1;
+                let mut params = vec![0; 0];
+                for input in doc_lines[i].split(' '){
+                    params.push(input.parse().unwrap());
+                }
+                for i in 0..screen.screen.len(){
+                    for v in 0..screen.screen[i].len(){
+                        screen.screen[i][v].r = params[0];
+                        screen.screen[i][v].g = params[1];
+                        screen.screen[i][v].b = params[2];
+                    }
+                }
+            }
             _ if doc_lines[i].starts_with('#') => {
             }
             _=>{
