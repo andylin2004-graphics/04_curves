@@ -16,5 +16,6 @@ fn main() {
     let color = Color::new_color(0, 255, 0);
     let mut edges = Matrix::new(0,0);
     let mut transform = Matrix::new(4,4);
-    parse_file("script", &mut edges, &mut transform, &mut screen, color);
+    // parse_file("script", &mut edges, &mut transform, &mut screen, color);
+    parse_file("sfloop", &mut edges, &mut transform, &mut screen, color);
 }

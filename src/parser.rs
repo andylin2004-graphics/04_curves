@@ -22,29 +22,29 @@ use crate::matrix::CurveType;
 /// ident: set the transform matrix to the identity matrix -
 
 /// scale: create a scale matrix,
-// then multiply the transform matrix by the scale matrix -
-// takes 3 arguments (sx, sy, sz)
+/// then multiply the transform matrix by the scale matrix -
+/// takes 3 arguments (sx, sy, sz)
 
-// translate: create a translation matrix,
-// then multiply the transform matrix by the translation matrix -
-// takes 3 arguments (tx, ty, tz)
+/// translate: create a translation matrix,
+/// then multiply the transform matrix by the translation matrix -
+/// takes 3 arguments (tx, ty, tz)
 
-// rotate: create a rotation matrix,
-// then multiply the transform matrix by the rotation matrix -
-// takes 2 arguments (axis, theta) axis should be x y or z
+/// rotate: create a rotation matrix,
+/// then multiply the transform matrix by the rotation matrix -
+/// takes 2 arguments (axis, theta) axis should be x y or z
 
-// apply: apply the current transformation matrix to the edge matrix
+/// apply: apply the current transformation matrix to the edge matrix
 
-// display: clear the screen, then
-// draw the lines of the edge matrix to the screen
-// display the screen
+/// display: clear the screen, then
+/// draw the lines of the edge matrix to the screen
+/// display the screen
 
-// save: clear the screen, then
-// draw the lines of the edge matrix to the screen
-// save the screen to a file -
-// takes 1 argument (file name)
+/// save: clear the screen, then
+/// draw the lines of the edge matrix to the screen
+/// save the screen to a file -
+/// takes 1 argument (file name)
 
-// quit: end parsing
+/// quit: end parsing
 /// 
 /// circle: add a circle to the edge matrix - 
 /// takes 4 arguments (cx, cy, cz, r)
