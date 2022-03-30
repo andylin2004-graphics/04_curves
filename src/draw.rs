@@ -116,38 +116,57 @@ impl Matrix{
         self.matrix_array[3].push(1.0);
     }
 
-    pub fn add_circle( &mut self, cx: f32, cy: f32, cz: f32, r: f32, step: f32 ){
-        let mut t = 0.0;
+    pub fn add_circle(&mut self, cx: f32, cy: f32, cz: f32, r: f32, step: i32) {
+        let mut t = 0;
         let mut prev_x = 0.0;
         let mut prev_y = 0.0;
-        while t < 1.0{
-            let x = r*(2.0*f32::consts::PI*t).cos()+cx;
-            let y = r*(2.0*f32::consts::PI*t).sin()+cy;
-            if t > 0.0{
+        while t <= step {
+            let x = r * (2.0 * f32::consts::PI * (t as f32 / step as f32)).cos() + cx;
+            let y = r * (2.0 * f32::consts::PI * (t as f32 / step as f32)).sin() + cy;
+            if t > 0 {
                 self.add_edge(prev_x, prev_y, cz, x, y, cz);
             }
             prev_x = x;
             prev_y = y;
-            t += step;
+            t += 1;
         }
     }
 
     /// x2, y2, x3, y3 are rx0, ry0, rx1, ry1 respectively if hermier
-    pub fn add_curve( &mut self, x0: f32, y0: f32, x1: f32, y1: f32, x2: f32, y2: f32, x3: f32, y3: f32, step: f32, curveType: &CurveType ){
+    /// x2, y2, x3, y3 are rx0, ry0, rx1, ry1 respectively if hermier
+    pub fn add_curve(
+        &mut self,
+        x0: f32,
+        y0: f32,
+        x1: f32,
+        y1: f32,
+        x2: f32,
+        y2: f32,
+        x3: f32,
+        y3: f32,
+        step: i32,
+        curveType: &CurveType,
+    ) {
         let matrix_x = Matrix::generate_curve_coefs(x0, x1, x2, x3, curveType);
         let matrix_y = Matrix::generate_curve_coefs(y0, y1, y2, y3, curveType);
-        let mut t: f32 = 0.0;
+        let mut t = 0;
         let mut prev_x = 0.0;
         let mut prev_y = 0.0;
-        while t < 1.0{
-            let x = (matrix_x.matrix_array[0][0]*t.powi(3))+(matrix_x.matrix_array[1][0]*t.powi(2))+(matrix_x.matrix_array[2][0]*t)+matrix_x.matrix_array[3][0];
-            let y = (matrix_y.matrix_array[0][0]*t.powi(3))+(matrix_y.matrix_array[1][0]*t.powi(2))+(matrix_y.matrix_array[2][0]*t)+matrix_y.matrix_array[3][0];
-            if t > 0.0{
-                self.add_edge(prev_x, prev_y, 0.0, x, y, 0.0); 
+        while t <= step {
+            let x = (matrix_x.matrix_array[0][0] * (t as f32 / step as f32).powi(3))
+                + (matrix_x.matrix_array[1][0] * (t as f32 / step as f32).powi(2))
+                + (matrix_x.matrix_array[2][0] * t as f32 / step as f32)
+                + matrix_x.matrix_array[3][0];
+            let y = (matrix_y.matrix_array[0][0] * (t as f32 / step as f32).powi(3))
+                + (matrix_y.matrix_array[1][0] * (t as f32 / step as f32).powi(2))
+                + (matrix_y.matrix_array[2][0] * t as f32 / step as f32)
+                + matrix_y.matrix_array[3][0];
+            if t > 0 {
+                self.add_edge(prev_x, prev_y, 0.0, x, y, 0.0);
             }
             prev_x = x;
             prev_y = y;
-            t += step;
+            t += 1;
         }
     }
 }
