@@ -106,13 +106,13 @@ pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, scr
 
                 match params[0]{
                     "x"=>{
-                        transform.multiply_matrixes(&Matrix::make_rotX(params[1].parse().unwrap()));
+                        transform.multiply_matrixes(&Matrix::make_rot_x(params[1].parse().unwrap()));
                     }
                     "y"=>{
-                        transform.multiply_matrixes(&Matrix::make_rotY(params[1].parse().unwrap()));
+                        transform.multiply_matrixes(&Matrix::make_rot_y(params[1].parse().unwrap()));
                     }
                     "z"=>{
-                        transform.multiply_matrixes(&Matrix::make_rotZ(params[1].parse().unwrap()));
+                        transform.multiply_matrixes(&Matrix::make_rot_z(params[1].parse().unwrap()));
                     }
                     _=>{
                         panic!("Invalid input {} at 0 for rotation: please use x, y, or z.", params[0]);
@@ -154,7 +154,7 @@ pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, scr
                     params.push(input.parse().unwrap());
                 }
 
-                points.add_circle(params[0], params[1], params[2], params[3], 100);
+                points.add_circle(params[0], params[1], params[2], params[3], 1000);
             }
             "hermite"=>{
                 i += 1;
@@ -163,7 +163,7 @@ pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, scr
                     params.push(input.parse().unwrap());
                 }
 
-                points.add_curve(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], 100, &CurveType::Hermite);
+                points.add_curve(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], 1000, &CurveType::Hermite);
             }
             "bezier"=>{
                 i += 1;
@@ -172,7 +172,7 @@ pub fn parse_file( fname: &str, points: &mut Matrix, transform: &mut Matrix, scr
                     params.push(input.parse().unwrap());
                 }
 
-                points.add_curve(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], 100, &CurveType::Bezier);
+                points.add_curve(params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], 1000, &CurveType::Bezier);
             }
             "color"=>{
                 i += 1;
